@@ -141,6 +141,7 @@
 .btn {
   padding: 0% !important;
   background-color: #00817e !important;
+  --bs-btn-font-size: 2rem !important;
 }
 
 .btn-order {

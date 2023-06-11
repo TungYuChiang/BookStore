@@ -91,7 +91,6 @@
             {% for item in cart_items %}
             <div class="cart-book">
               <form action="#" class="cart-book__form">
-                <input type="checkbox" class="checkbox margin-right-md" />
                 <div class="img-box margin-right-sm">
                   <img
                     class="cart-img"
@@ -100,19 +99,18 @@
                   />
                 </div>
                 <p class="cart-book-title margin-right-super">
-                  test
+                  {{item.name}}
                 </p>
 
                 <div class="price-tag margin-right-super">
-                  <p class="price-tag__sale">＄67.000</p>
-                  <p class="price-tag__origin">＄100.000</p>
+                  <p class="price-tag__sale">{{item.price}}</p>
                 </div>
                 <div class="quantity-box__cart quantity-box margin-right-super">
                   <button class="btn-decrease">-</button>
-                  <input type="number" min="0" value="0" />
+                  <input type="number" min="0" value={{item.quantity}} />
                   <button class="btn-increase">+</button>
                 </div>
-                <button type="submit" class="btn-detele-item">
+                <button type="submit" class="btn-detele-item"  data-title="{{ item.name }}">
                   <ion-icon class="delete-icon" name="trash-outline"></ion-icon>
                 </button>
               </form>
@@ -136,17 +134,9 @@
             </div>
             <div class="total-price-section">
               <h2 class="price-title">支付</h2>
-              <div class="shipping">
-                <span>運費</span>
-                <span>15.000</span>
-              </div>
-              <div class="discount">
-                <span>折扣</span>
-                <span>-30.000</span>
-              </div>
               <div class="total">
                 <span>總金額</span>
-                <span>85.000</span>
+                <span>{{total_price}}</span>
               </div>
             </div>
             <button class="btn btn--radius btn-order">確認</button>
@@ -155,65 +145,75 @@
       </section>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-      <div class="container grid grid--footer">
-        <div class="logo-col">
-          <a href="#" class="footer-logo"> BookSale </a>
+    <!-- ======= Footer ======= -->
+  <footer id="footer">
 
-          <ul class="social-links">
-            <li>
-              <a class="footer-link" href="#"
-                ><ion-icon class="social-icon" name="logo-instagram"></ion-icon
-              ></a>
-            </li>
-            <li>
-              <a class="footer-link" href="#"
-                ><ion-icon class="social-icon" name="logo-facebook"></ion-icon
-              ></a>
-            </li>
-            <li>
-              <a class="footer-link" href="#"
-                ><ion-icon class="social-icon" name="logo-twitter"></ion-icon
-              ></a>
-            </li>
-          </ul>
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
 
-          <p class="copyright">
-            Copyright &copy; 2027 by BookSale, Inc. All rights reserved.
-          </p>
-        </div>
-        <div class="address-col">
-          <p class="footer-heading">Liên hệ</p>
-          <address class="contacts">
-            <p class="address">1 Võ Văn Ngânn - Thủ Đức - Hồ Chí Minh</p>
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>Arsha</h3>
             <p>
-              <a class="footer-link" href="tel:0383314133">0383314133</a><br />
-              <a class="footer-link" href="dtb742002@gmail.com"
-                >dtb742002@gmail.com</a
-              >
+              A108 Adam Street <br>
+              New York, NY 535022<br>
+              United States <br><br>
+              <strong>Phone:</strong> +1 5589 55488 55<br>
+              <strong>Email:</strong> info@example.com<br>
             </p>
-          </address>
-        </div>
-        <nav class="nav-col">
-          <p class="footer-heading">Tài khoản</p>
-          <ul class="footer-nav">
-            <li><a class="footer-link" href="#">Tạo tài khoản</a></li>
-            <li><a class="footer-link" href="#">Đăng ký</a></li>
-            <li><a class="footer-link" href="#">Cá nhân</a></li>
-          </ul>
-        </nav>
+          </div>
 
-        <nav class="nav-col">
-          <p class="footer-heading">Công ty</p>
-          <ul class="footer-nav">
-            <li><a class="footer-link" href="#">Về chúng tôi</a></li>
-            <li><a class="footer-link" href="#">Tác giả</a></li>
-            <li><a class="footer-link" href="#">Nhà xuất bản</a></li>
-          </ul>
-        </nav>
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Social Networks</h4>
+            <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+            <div class="social-links mt-3">
+              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+              <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </footer>
+    </div>
+
+    <div class="container footer-bottom clearfix">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Arsha</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
 
     <script
       type="module"
@@ -223,5 +223,7 @@
       nomodule
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/cart.js') }}"></script>
   </body>
 </html>
