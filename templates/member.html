@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>BookStore</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='assets/img/favicon.png') }}" rel="icon">
+  <link href="{{ url_for('static', filename='assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static', filename='NiceAdmin/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='NiceAdmin/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='NiceAdmin/assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='NiceAdmin/assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='NiceAdmin/assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='NiceAdmin/assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='NiceAdmin/assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+
+
+
+  <!-- Template Main CSS File -->
+  <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Arsha
+  * Updated: May 30 2023 with Bootstrap v5.3.0
+  * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top header-inner-pages">
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo me-auto"><a href="{{ url_for('index') }}">BookStore</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto"><img src="{{ url_for('static', filename='assets/img/logo.png') }}" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">本月暢銷</a></li>
+          <li class="dropdown"><a href="#"><span>書籍類別</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="#">工具書</a></li>
+              <li><a href="#">雜誌</a></li>
+              <li><a href="#">科幻小說</a></li>
+              <li><a href="#">愛情小說</a></li>
+              <li><a href="#">漫畫</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>書本語言</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="#">中文</a></li>
+              <li><a href="#">英文</a></li>
+            </ul>
+          </li>
+          {% if 'logged_in' in session and session['logged_in'] %}
+          <li><a class="nav-link scrollto" href="#contact">購物車</a></li>
+          <li><a class="nav-link scrollto" href="{{ url_for('member') }}">會員中心</a></li>
+          <li><a class="nav-link scrollto" href="{{ url_for('logout') }}">登出</a></li>
+          {% else %}
+          <li><a class="getstarted scrollto" href="{{ url_for('login') }}">Login</a></li>
+          <li><a class="getstarted scrollto" href="{{ url_for('register') }}">註冊</a></li>
+          {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <ol>
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          <li>會員中心</li>
+        </ol>
+        <h2>歷史訂單</h2>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <section class="inner-page">
+      <div class="container">
+      <p>
+        <select id="mySelect" onchange="fetchOrders()">
+          <option value="">請選擇你要查詢的訂單區間</option>
+          <option value="option1">今日訂單</option>
+          <option value="option2">所有訂單</option>
+        </select>
+      </p>
+      <p id="orderid_btn"></p>
+      <section class="section" id="mySection" style="display: none;">
+        <div class="row">
+          <div class="col-lg-12">
+
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">訂單內容</h5>
+                <table class="table datatable" id="orderitems_table">
+                  <thead>
+                    <tr>
+                      <th>書名</th>
+                        <th>數量</th>
+                        <th>價格</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                </table>
+                <!-- End Table with stripped rows -->
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="footer-newsletter">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <h4>Join Our Newsletter</h4>
+            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+            <form action="" method="post">
+              <input type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>Arsha</h3>
+            <p>
+              A108 Adam Street <br>
+              New York, NY 535022<br>
+              United States <br><br>
+              <strong>Phone:</strong> +1 5589 55488 55<br>
+              <strong>Email:</strong> info@example.com<br>
+            </p>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Social Networks</h4>
+            <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+            <div class="social-links mt-3">
+              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+              <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom clearfix">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Arsha</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+  <!-- Template Main JS File -->
+  <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='NiceAdmin/assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='NiceAdmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='NiceAdmin/assets/vendor/chart.js/chart.umd.js') }}"></script>
+  <script src="{{ url_for('static', filename='NiceAdmin/assets/vendor/echarts/echarts.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='NiceAdmin/assets/vendor/quill/quill.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='NiceAdmin/assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
+  <script src="{{ url_for('static', filename='NiceAdmin/assets/vendor/tinymce/tinymce.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='NiceAdmin/assets/vendor/php-email-form/validate.js') }}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{{ url_for('static', filename='NiceAdmin/assets/js/main.js') }}"></script>
+
+  <script>
+
+function fetchOrders() {
+  var selectedOption = document.getElementById("mySelect").value;
+
+  if (selectedOption !== '') {
+    fetch('/get_orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        selectedOption: selectedOption
+      })
+    }).then(response => response.json())
+      .then(data => {
+        let buttonsContainer = document.getElementById("orderid_btn");
+        buttonsContainer.innerHTML = '';
+
+        data.orders.forEach(order => {
+          let button = document.createElement('button');
+          button.className = "btn btn-primary";
+          button.innerHTML = order;
+          button.id = order;
+          button.name = order;
+          button.style.width = '100px';
+          button.style.margin = '10px';
+          button.addEventListener('click', function() {
+            fetchOrderItems(this.id);
+          });
+          buttonsContainer.appendChild(button);
+        });
+      });
+  } else {
+    document.getElementById("orderid_btn").innerHTML = '';
+  }
+}
+
+  // Function to fetch order items for a specific order
+// Function to fetch order items for a specific order
+function fetchOrderItems(orderID) {
+  fetch('/get_order_items', {
+    method: 'POST', 
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      orderID: orderID
+    })
+  }).then(response => response.json())
+    .then(data => {
+
+      // Clear existing table rows
+      let tableBody = document.querySelector("tbody");
+      console.log(document.querySelector("tbody"))
+      tableBody.innerHTML = '';
+      console.log(data)
+
+      // Add new table rows
+      data.order_items.forEach(item => {
+        let row = document.createElement('tr');
+
+        let nameCell = document.createElement('td');
+        nameCell.textContent = item[0];
+        row.appendChild(nameCell);
+
+        let quantityCell = document.createElement('td');
+        quantityCell.textContent = item[1];
+        row.appendChild(quantityCell);
+
+        let priceCell = document.createElement('td');
+        priceCell.textContent = item[2];
+        row.appendChild(priceCell);
+
+        tableBody.appendChild(row);
+      });
+      let section = document.getElementById('mySection');
+      if (section.style.display === "none") {
+        section.style.display = "block";
+      }
+    });
+}
+
+    </script>
+
+
+</body>
+
+</html>
