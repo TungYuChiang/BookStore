@@ -1,3 +1,4 @@
+#coding=utf-8
 from flask import Flask, render_template, request, session, redirect, url_for,  jsonify
 import mysql.connector
 import os
@@ -10,7 +11,7 @@ app.secret_key = '123456789'
 database = mysql.connector.connect(
   host = "127.0.0.1",
   user = "root",
-  password = "IM880319",
+  password = "e",
   database = "BookStore_DB" # 替換成你的資料庫名稱
 )
 
@@ -25,23 +26,21 @@ def allowed_file(filename):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username')
+        account = request.form.get('account')
         password = request.form.get('password')
 
         cursor = database.cursor()
         query = "SELECT Account, Password FROM Member WHERE Account = %s"
-        cursor.execute(query, (username,))
+        cursor.execute(query, (account,))
         user = cursor.fetchone()
-
+        
+        
         if user and user[1] == password:
             session['logged_in'] = True
-            session['username'] = username
-            if username == "admin":  # 檢查用戶是否為 'admin'
-                return redirect(url_for('manage'))  # 如果是 'admin'，則導向 'manage.html'
-            else:
-                return redirect(url_for('index'))
+            session['username'] = account
+            return redirect(url_for('index'))
         else:
-            return "Invalid username or password" # 如果使用者名稱或密碼不正確，返回一個錯誤訊息
+            return render_template('login.html') # 如果使用者名稱或密碼不正確，則畫面不動
     else:
         return render_template('login.html') # 如果是 GET 請求，則渲染登入頁面
 
@@ -55,14 +54,14 @@ def logout():
 def register():
     if request.method == 'POST':
         name = request.form.get('name')
-        username = request.form.get('account')
+        account = request.form.get('account')
         password = request.form.get('password')
         email = request.form.get('email')
         birthdate = request.form.get('birthdate')
 
         cursor = database.cursor()
         query = "INSERT INTO Member (Name, Birth, Account, Password, Email) VALUES (%s, %s, %s, %s, %s)"
-        cursor.execute(query, (name, birthdate, username, password, email))
+        cursor.execute(query, (name, birthdate, account, password, email))
         database.commit()
 
         return redirect(url_for('login')) # 如果註冊成功，將用戶重定向到登入頁面
@@ -82,8 +81,6 @@ def index():
         return render_template('index.html',cart_count=cart_count)
     return render_template('index.html')
 
-from flask import request
-import mysql.connector
 
 @app.route('/search')
 def search():
@@ -228,12 +225,12 @@ def upload():
     else:
         return render_template('upload.html')
     
-@app.route('/cart')
+@app.route('/show_cart')
 def show_cart():
     # 取出購物車中所有的商品
-    
     cursor = database.cursor()
-    cursor.execute('SELECT * FROM CartItems WHERE UserID = %s', (session['username'],))
+    if (session['username']):
+        cursor.execute('SELECT * FROM CartItems WHERE UserID = %s', (session['username'],))
     total_items = cursor.fetchall()
 
     cart_items=[]
@@ -333,6 +330,11 @@ def order_process():
     # 在這裡進行後續的訂單處理
 
     return jsonify({'status': 'success', 'message': '訂單已收到'})
+
+
+
+
+
 
 
 if __name__ == "__main__":
