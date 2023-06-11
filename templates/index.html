@@ -52,11 +52,11 @@
         <li><a class="nav-link scrollto active" href="#hero">本月暢銷</a></li>
         <li class="dropdown"><a href="#"><span>書籍類別</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a href="{{ url_for('bookByclass') }}?category=工具書">工具書</a></li>
-            <li><a href="{{ url_for('bookByclass') }}?category=雜誌">雜誌</a></li>
-            <li><a href="{{ url_for('bookByclass') }}?category=科幻小說">科幻小說</a></li>
-            <li><a href="{{ url_for('bookByclass') }}?category=愛情小說">愛情小說</a></li>
-            <li><a href="{{ url_for('bookByclass') }}?category=漫畫">漫畫</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=工具書">工具書</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=雜誌">雜誌</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=fiction">科幻小說</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=愛情小說">愛情小說</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=漫畫">漫畫</a></li>
           </ul>
         </li>
         <li class="dropdown"><a href="#"><span>書籍語言</span> <i class="bi bi-chevron-down"></i></a>
