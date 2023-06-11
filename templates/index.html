@@ -38,47 +38,48 @@
 </head>
 
 <body>
-  
-<!-- ======= Header ======= -->
-<header id="header" class="fixed-top ">
-  <div class="container d-flex align-items-center">
 
-    <h1 class="logo me-auto"><a href="{{ url_for('index') }}">BookStore</a></h1>
-    <!-- Uncomment below if you prefer to use an image logo -->
-    <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center">
 
-    <nav id="navbar" class="navbar">
-      <ul>
-        <li><a class="nav-link scrollto active" href="#hero">本月暢銷</a></li>
-        <li class="dropdown"><a href="#"><span>書籍類別</span> <i class="bi bi-chevron-down"></i></a>
-          <ul>
-            <li><a href="{{ url_for('bookByclass') }}?category=工具書">工具書</a></li>
-            <li><a href="{{ url_for('bookByclass') }}?category=雜誌">雜誌</a></li>
-            <li><a href="{{ url_for('bookByclass') }}?category=科幻小說">科幻小說</a></li>
-            <li><a href="{{ url_for('bookByclass') }}?category=愛情小說">愛情小說</a></li>
-            <li><a href="{{ url_for('bookByclass') }}?category=漫畫">漫畫</a></li>
-          </ul>
-        </li>
-        <li class="dropdown"><a href="#"><span>書籍語言</span> <i class="bi bi-chevron-down"></i></a>
-          <ul>
-            <li><a href="#">中文</a></li>
-            <li><a href="#">英文</a></li>
-          </ul>
-        </li>
-        {% if 'logged_in' in session and session['logged_in'] %}
-        <li><a class="nav-link scrollto" href="{{ url_for('member') }}">會員中心</a></li>
-        <li><a class="nav-link scrollto" href="{{ url_for('logout') }}">登出</a></li>
-        <li><a href="{{ url_for('show_cart') }}"><ion-icon class="cart-icon" name="cart-sharp" size="large"></ion-icon></a></li>
-        {% else %}
-        <li><a class="getstarted scrollto" href="{{ url_for('login') }}">Login</a></li>
-        <li><a class="getstarted scrollto" href="{{ url_for('register') }}">註冊</a></li>
-        {% endif %}
-      </ul>
-      <i class="bi bi-list mobile-nav-toggle"></i>
-    </nav><!-- .navbar -->
+      <h1 class="logo me-auto"><a href="index.html">BookStore</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
-  </div>
-</header><!-- End Header -->
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">本月暢銷</a></li>
+          <li class="dropdown"><a href="#"><span>書籍類別</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="#">工具書</a></li>
+              <li><a href="#">雜誌</a></li>
+              <li><a href="#">科幻小說</a></li>
+              <li><a href="#">愛情小說</a></li>
+              <li><a href="#">漫畫</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>書本語言</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="#">中文</a></li>
+              <li><a href="#">英文</a></li>
+            </ul>
+          </li>
+          {% if 'logged_in' in session and session['logged_in'] %}
+          <li><a class="nav-link scrollto" href="#contact">購物車</a></li>
+          <li><a class="nav-link scrollto" href="{{ url_for('member') }}">會員中心</a></li>
+          <li><a class="nav-link scrollto" href="{{ url_for('logout') }}">登出</a></li>
+          {% else %}
+          <li><a class="getstarted scrollto" href="{{ url_for('login') }}">Login</a></li>
+          <li><a class="getstarted scrollto" href="{{ url_for('register') }}">註冊</a></li>
+          {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
 
@@ -106,8 +107,8 @@
         <div class="row justify-content-center">
           <div class="col-lg-6">
             <h4>一起進入書本的海洋吧</h4>
-            <form action="/search" method="post">
-              <input type="text" name="keyword" placeholder="輸入書名、出版社、作者的關鍵字"><input type="submit" value="Search">
+            <form action="" method="post">
+              <input type="email" name="email" placeholder="輸入書名、出版社、作者的關鍵字"><input type="submit" value="Search">
             </form>
           </div>
         </div>
@@ -120,20 +121,21 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>各類暢銷書</h2>
+          <h2>本月推薦</h2>
         </div>
 
         <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
-          <li data-filter=".filter-card">工具書</li>
-          <li data-filter=".filter-card">愛情小說</li>
-          <li data-filter=".filter-card">雜誌</li>
-          <li data-filter=".filter-card">科幻小說</li>
-          <li data-filter=".filter-card">漫畫</li>
+          <li data-filter=".all" class="filter-active">所有書籍</li>
+          <li data-filter=".textbook">工具書</li>
+          <li data-filter=".magazine">雜誌</li>
+          <li data-filter=".fiction">科幻小說</li>
+          <li data-filter=".romance">愛情小說</li>
+          <li data-filter=".comic">漫畫</li>
         </ul>
 
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
           <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-img"><img src="{{url_for('static', filename='assets/img/portfolio/portfolio-7.jpg') }}" class="img-fluid" alt=""></div>
+            <div class="portfolio-img"><img src="{{ url_for('static', filename='assets/img/portfolio/portfolio-7.jpg') }}" class="img-fluid" alt=""></div>
             <div class="portfolio-info">
               <h4>Card 1</h4>
               <p>Card</p>
@@ -293,10 +295,38 @@
   <script src="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
   <script src="{{ url_for('static', filename='assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
   <script src="{{ url_for('static', filename='assets/vendor/php-email-form/validate.js') }}"></script>
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
   <!-- Template Main JS File -->
   <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+  $("#portfolio-flters li").click(function() {
+    var filter = $(this).attr('data-filter').substring(1); // 去掉前面的"."
+    $.ajax({
+      url: '/api/getImages',  // 替換成你的後端 API 接口
+      method: 'POST',
+      contentType: 'application/json',  // 設置請求內容類型
+      data: JSON.stringify({ 'category': filter }),  // 將請求資料轉換為 JSON 格式
+      success: function(data) {
+        $(".portfolio-container").empty();  // 清空原有內容
+        data.forEach(function(bookname) {
+          console.log(bookname)
+          var imgPath = 'static/assets/img/book/' + bookname + '.jpg';
+          var item = '<div class="col-lg-2 col-md-6 portfolio-item filter-card"><div class="portfolio-img"><img src="' + imgPath + '" class="img-fluid" alt=""></div></div>';
+          $(".portfolio-container").append(item);  // 加入新的內容
+          let portfolioContainer = document.querySelector('.portfolio-container');
+          let newImageHeight = document.querySelector('.portfolio-img img').offsetHeight;
+          portfolioContainer.style.height = 350 + 'px';
+        });
+      }
+    });
+  });
+  $("#portfolio-flters li.filter-active").click();
+});
+</script>
+
+
 
 </body>
 
