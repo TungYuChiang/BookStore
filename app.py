@@ -454,6 +454,33 @@ def get_order_items():
 
     return jsonify({'order_items':order_items})
 
+@app.route('/api/getImages', methods=['POST'])
+def get_images():
+    category = request.json['category']
+    cursor = database.cursor()
+    if category != 'all':
+        query = f"""SELECT BookName, SUM(Quantity) AS TotalQuantity FROM Book 
+                    JOIN OrderItems ON Book.BookName = OrderItems.Title 
+                    WHERE  Category = %s 
+                    GROUP BY  BookName 
+                    ORDER BY  TotalQuantity DESC
+                    LIMIT 5;"""
+        cursor.execute(query, (category,))
+    else:
+        query = f"""SELECT BookName, SUM(Quantity) AS TotalQuantity FROM Book 
+                    JOIN OrderItems ON Book.BookName = OrderItems.Title 
+                    GROUP BY  BookName 
+                    ORDER BY  TotalQuantity DESC
+                    LIMIT 5;"""
+        cursor.execute(query)
+    result = cursor.fetchall()
+    images = []
+    for item in result:
+        images.append(item[0])
+        if len(images)==5:
+            break
+    return jsonify(images)
+
 
 
 
