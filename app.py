@@ -82,8 +82,8 @@ def index():
     return render_template('index.html')
 
 
-@app.route('bookByclass')
-def bookByclass():
+@app.route('/bookByCategory')
+def bookByCategory():
     category = request.args.get('category', '')#哪個類型的書
     #從上方的導覽列or下方選擇是哪種類型的書
     #SELECT * FROM Book WHERE Cateogory LIKE %s
@@ -133,6 +133,7 @@ def bookByclass():
     else:
         cart_count = 0
     address = category + '.html'
+    print(address)
     return render_template(address, books = books_list, cart_count = cart_count)
 
 
