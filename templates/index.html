@@ -38,42 +38,47 @@
 </head>
 
 <body>
+  
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top ">
+  <div class="container d-flex align-items-center">
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top ">
-    <div class="container d-flex align-items-center">
+    <h1 class="logo me-auto"><a href="/">BookStore</a></h1>
+    <!-- Uncomment below if you prefer to use an image logo -->
+    <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
-      <h1 class="logo me-auto"><a href="index.html">BookStore</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a class="nav-link scrollto active" href="#hero">本月暢銷</a></li>
+        <li class="dropdown"><a href="#"><span>書籍類別</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a href="#">工具書</a></li>
+            <li><a href="#">雜誌</a></li>
+            <li><a href="#">科幻小說</a></li>
+            <li><a href="#">愛情小說</a></li>
+            <li><a href="#">漫畫</a></li>
+          </ul>
+        </li>
+        <li class="dropdown"><a href="#"><span>書本語言</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a href="#">中文</a></li>
+            <li><a href="#">英文</a></li>
+          </ul>
+        </li>
+        {% if 'logged_in' in session and session['logged_in'] %}
+        <li><a class="nav-link scrollto" href="#">會員中心</a></li>
+        <li><a class="nav-link scrollto" href="{{ url_for('logout') }}">登出</a></li>
+        <li><a href="{{ url_for('show_cart') }}"><ion-icon class="cart-icon" name="cart-sharp" size="large"></ion-icon></a></li>
+        {% else %}
+        <li><a class="getstarted scrollto" href="{{ url_for('login') }}">Login</a></li>
+        <li><a class="getstarted scrollto" href="{{ url_for('register') }}">註冊</a></li>
+        {% endif %}
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
 
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="nav-link scrollto active" href="#hero">本月暢銷</a></li>
-          <li class="dropdown"><a href="#"><span>書籍類別</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="#">工具書</a></li>
-              <li><a href="#">雜誌</a></li>
-              <li><a href="#">科幻小說</a></li>
-              <li><a href="#">愛情小說</a></li>
-              <li><a href="#">漫畫</a></li>
-            </ul>
-          </li>
-          <li class="dropdown"><a href="#"><span>書本語言</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="#">中文</a></li>
-              <li><a href="#">英文</a></li>
-            </ul>
-          </li>
-          <li><a class="nav-link scrollto" href="#contact">購物車</a></li>
-          <li><a class="getstarted scrollto" href="/login">Login</a></li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
-
-    </div>
-  </header><!-- End Header -->
-
+  </div>
+</header><!-- End Header -->
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
 
@@ -294,7 +299,8 @@
   <script src="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
   <script src="{{ url_for('static', filename='assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
   <script src="{{ url_for('static', filename='assets/vendor/php-email-form/validate.js') }}"></script>
-
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   <!-- Template Main JS File -->
   <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 

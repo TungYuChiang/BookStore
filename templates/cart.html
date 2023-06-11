@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,800;1,300;1,400;1,500;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Favicons -->
+    <link href="{{ url_for('static', filename='assets/img/favicon.png') }}" rel="icon">
+    <link href="{{ url_for('static', filename='assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/assets/css/general.css" />
+    <link rel="stylesheet" href="/static/assets/css/style2.css" />
+    <link rel="stylesheet" href="/static/assets/css/query.css" />
+    <link rel="stylesheet" href="/static/assets/css/cart.css" />
+    <link href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+     <!-- Template Main CSS File -->
+    <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet">
+
+    <script defer src="/static/assets/js/index.js"></script>
+    <title>The BookSale</title>
+  </head>
+  <body>
+    <!-- ======= Header ======= -->
+<header id="header" class="fixed-top ">
+  <div class="container d-flex align-items-center">
+
+    <h1 class="logo me-auto"><a href="/">BookStore</a></h1>
+    <!-- Uncomment below if you prefer to use an image logo -->
+    <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a class="nav-link scrollto active" href="#hero">本月暢銷</a></li>
+        <li class="dropdown"><a href="#"><span>書籍類別</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a href="#">工具書</a></li>
+            <li><a href="#">雜誌</a></li>
+            <li><a href="#">科幻小說</a></li>
+            <li><a href="#">愛情小說</a></li>
+            <li><a href="#">漫畫</a></li>
+          </ul>
+        </li>
+        <li class="dropdown"><a href="#"><span>書本語言</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a href="#">中文</a></li>
+            <li><a href="#">英文</a></li>
+          </ul>
+        </li>
+        {% if 'logged_in' in session and session['logged_in'] %}
+        <li><a class="nav-link scrollto" href="#">會員中心</a></li>
+        <li><a class="nav-link scrollto" href="{{ url_for('logout') }}">登出</a></li>
+        <li><a href="{{ url_for('show_cart') }}"><ion-icon class="cart-icon" name="cart-sharp" size="large"></ion-icon></a></li>
+        {% else %}
+        <li><a class="getstarted scrollto" href="{{ url_for('login') }}">Login</a></li>
+        <li><a class="getstarted scrollto" href="{{ url_for('register') }}">註冊</a></li>
+        {% endif %}
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+
+  </div>
+</header><!-- End Header -->
+
+
+
+
+    <!-- MAIN CONTENT -->
+    <main>
+      <section class="cart-section">
+        <h2 class="container heading-secondary cart-title margin-bottom-super">
+          購物車
+        </h2>
+
+        <div class="container grid cart-grid">
+          <div class="cart-books">
+            {% for item in cart_items %}
+            <div class="cart-book">
+              <form action="#" class="cart-book__form">
+                <input type="checkbox" class="checkbox margin-right-md" />
+                <div class="img-box margin-right-sm">
+                  <img
+                    class="cart-img"
+                    src="/static/assets/img/cta-bg.jpg"
+                    alt="Cay cam ngot cua toi"
+                  />
+                </div>
+                <p class="cart-book-title margin-right-super">
+                  test
+                </p>
+
+                <div class="price-tag margin-right-super">
+                  <p class="price-tag__sale">＄67.000</p>
+                  <p class="price-tag__origin">＄100.000</p>
+                </div>
+                <div class="quantity-box__cart quantity-box margin-right-super">
+                  <button class="btn-decrease">-</button>
+                  <input type="number" min="0" value="0" />
+                  <button class="btn-increase">+</button>
+                </div>
+                <button type="submit" class="btn-detele-item">
+                  <ion-icon class="delete-icon" name="trash-outline"></ion-icon>
+                </button>
+              </form>
+            </div>
+            {% endfor %}
+          </div>
+          <aside class="customer-info">
+            <div class="address-box">
+              <div class="address-header">
+                <p class="address-heading">運送地</p>
+                <a href="#" class="change-address__link">更改</a>
+              </div>
+              <div class="info">
+                <p class="info-name padding-r-md">台北</p>
+                <p class="info-phone padding-l-md">0383314133</p>
+              </div>
+              <address class="info-address">
+                <span>地址</span>
+                402台中市南區興大路145號
+              </address>
+            </div>
+            <div class="total-price-section">
+              <h2 class="price-title">支付</h2>
+              <div class="shipping">
+                <span>運費</span>
+                <span>15.000</span>
+              </div>
+              <div class="discount">
+                <span>折扣</span>
+                <span>-30.000</span>
+              </div>
+              <div class="total">
+                <span>總金額</span>
+                <span>85.000</span>
+              </div>
+            </div>
+            <button class="btn btn--radius btn-order">確認</button>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container grid grid--footer">
+        <div class="logo-col">
+          <a href="#" class="footer-logo"> BookSale </a>
+
+          <ul class="social-links">
+            <li>
+              <a class="footer-link" href="#"
+                ><ion-icon class="social-icon" name="logo-instagram"></ion-icon
+              ></a>
+            </li>
+            <li>
+              <a class="footer-link" href="#"
+                ><ion-icon class="social-icon" name="logo-facebook"></ion-icon
+              ></a>
+            </li>
+            <li>
+              <a class="footer-link" href="#"
+                ><ion-icon class="social-icon" name="logo-twitter"></ion-icon
+              ></a>
+            </li>
+          </ul>
+
+          <p class="copyright">
+            Copyright &copy; 2027 by BookSale, Inc. All rights reserved.
+          </p>
+        </div>
+        <div class="address-col">
+          <p class="footer-heading">Liên hệ</p>
+          <address class="contacts">
+            <p class="address">1 Võ Văn Ngânn - Thủ Đức - Hồ Chí Minh</p>
+            <p>
+              <a class="footer-link" href="tel:0383314133">0383314133</a><br />
+              <a class="footer-link" href="dtb742002@gmail.com"
+                >dtb742002@gmail.com</a
+              >
+            </p>
+          </address>
+        </div>
+        <nav class="nav-col">
+          <p class="footer-heading">Tài khoản</p>
+          <ul class="footer-nav">
+            <li><a class="footer-link" href="#">Tạo tài khoản</a></li>
+            <li><a class="footer-link" href="#">Đăng ký</a></li>
+            <li><a class="footer-link" href="#">Cá nhân</a></li>
+          </ul>
+        </nav>
+
+        <nav class="nav-col">
+          <p class="footer-heading">Công ty</p>
+          <ul class="footer-nav">
+            <li><a class="footer-link" href="#">Về chúng tôi</a></li>
+            <li><a class="footer-link" href="#">Tác giả</a></li>
+            <li><a class="footer-link" href="#">Nhà xuất bản</a></li>
+          </ul>
+        </nav>
+      </div>
+    </footer>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>
