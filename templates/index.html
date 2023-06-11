@@ -38,8 +38,8 @@
 </head>
 
 <body>
-  
-<!-- ======= Header ======= -->
+
+  <!-- ======= Header ======= -->
 <header id="header" class="fixed-top ">
   <div class="container d-flex align-items-center">
 
@@ -107,8 +107,7 @@
           <div class="col-lg-6">
             <h4>一起進入書本的海洋吧</h4>
             <form action="/search" method="post">
-              <input type="text" name="keyword" placeholder="輸入書名、出版社、作者的關鍵字"><input type="submit" value="Search">
-            </form>
+              <input type="text" name="keyword" placeholder="輸入書名、出版社、作者的關鍵字"><input type="submit" value="Search">            </form>
           </div>
         </div>
       </div>
@@ -124,11 +123,12 @@
         </div>
 
         <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
-          <li data-filter=".filter-card">工具書</li>
-          <li data-filter=".filter-card">愛情小說</li>
-          <li data-filter=".filter-card">雜誌</li>
-          <li data-filter=".filter-card">科幻小說</li>
-          <li data-filter=".filter-card">漫畫</li>
+          <li data-filter=".all" class="filter-active">所有書籍</li>
+          <li data-filter=".textbook">工具書</li>
+          <li data-filter=".magazine">雜誌</li>
+          <li data-filter=".fiction">科幻小說</li>
+          <li data-filter=".romance">愛情小說</li>
+          <li data-filter=".comic">漫畫</li>
         </ul>
 
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
@@ -293,10 +293,40 @@
   <script src="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
   <script src="{{ url_for('static', filename='assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
   <script src="{{ url_for('static', filename='assets/vendor/php-email-form/validate.js') }}"></script>
+
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   <!-- Template Main JS File -->
   <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+  $("#portfolio-flters li").click(function() {
+    var filter = $(this).attr('data-filter').substring(1); // 去掉前面的"."
+    $.ajax({
+      url: '/api/getImages',  // 替換成你的後端 API 接口
+      method: 'POST',
+      contentType: 'application/json',  // 設置請求內容類型
+      data: JSON.stringify({ 'category': filter }),  // 將請求資料轉換為 JSON 格式
+      success: function(data) {
+        $(".portfolio-container").empty();  // 清空原有內容
+        data.forEach(function(bookname) {
+          console.log(bookname)
+          var imgPath = 'static/assets/img/book/' + bookname + '.jpg';
+          var item = '<div class="col-lg-2 col-md-6 portfolio-item filter-card"><div class="portfolio-img"><img src="' + imgPath + '" class="img-fluid" alt=""></div></div>';
+          $(".portfolio-container").append(item);  // 加入新的內容
+          let portfolioContainer = document.querySelector('.portfolio-container');
+          let newImageHeight = document.querySelector('.portfolio-img img').offsetHeight;
+          portfolioContainer.style.height = 350 + 'px';
+        });
+      }
+    });
+  });
+  $("#portfolio-flters li.filter-active").click();
+});
+</script>
+
+
 
 </body>
 
