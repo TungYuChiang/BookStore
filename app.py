@@ -11,7 +11,7 @@ app.secret_key = '123456789'
 database = mysql.connector.connect(
   host = "127.0.0.1",
   user = "root",
-  password = "IM880319",
+  password = "e",
   database = "BookStore_DB" # 替換成你的資料庫名稱
 )
 
@@ -70,7 +70,6 @@ def register():
 
 @app.route('/')
 def index():
-
     if 'logged_in' in session and session['logged_in']:
         cursor = database.cursor()
         cursor.execute('SELECT SUM(Quantity) FROM CartItems WHERE UserID = %s', (session['username'],))
@@ -311,15 +310,6 @@ def show_cart():
 
     # 將購物車中的商品和總價傳遞給模板
     return render_template('cart.html', cart_items=cart_items, total_price=total_price,cart_count=total_quantity)
-
-# delete the whole item
-@app.route('/delete_cart_item', methods=['POST'])
-def delete_cart_item():
-    cursor = database.cursor()
-    item_name = request.form.get('item_name')
-    cursor.execute('DELETE FROM CartItems WHERE UserID = %s AND Title = %s', (session['username'], item_name))
-    
-    return 'Cart item deleted successfully'
    
 # delete the whole cart item
 @app.route('/delete_cart_item', methods=['POST'])
