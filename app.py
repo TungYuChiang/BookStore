@@ -84,15 +84,16 @@ def index():
 
 @app.route('/search')
 def search():
+    category = request.args.get('category', '')#哪個類型的書
+    #從上方的導覽列or下方選擇是哪種類型的書
+    #SELECT * FROM Book WHERE Cateogory LIKE %s
     query = request.args.get('query', '')
     cursor = database.cursor()
-    cursor.execute("SELECT * FROM Book WHERE BookName LIKE %s", ('%' + query + '%',))
-
+    cursor.execute("SELECT * FROM Book WHERE Category LIKE %s", ('%' + category + '%',))
+    
     books = cursor.fetchall()
-
     # 準備空的書本列表
     books_list = []
-
     # 處理每一本書
     for book in books:
         # 取得 Author_ID 和 Publisher_ID
@@ -120,6 +121,7 @@ def search():
         }
         # 添加到書本列表
         books_list.append(book_dict)
+        print(books_list[0])
 
     if 'logged_in' in session and session['logged_in']:
         cursor = database.cursor()
@@ -130,7 +132,6 @@ def search():
             cart_count = 0
     else:
         cart_count = 0
-
     return render_template('search.html', query=query, books=books_list,cart_count=cart_count)
 
 @app.before_request
