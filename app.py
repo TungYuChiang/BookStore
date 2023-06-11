@@ -396,6 +396,63 @@ def order_process():
     # 在這裡進行後續的訂單處理
 
     return jsonify({'status': 'success', 'message': '訂單已收到'})
+  
+ @app.route('/member',methods=['GET'])
+def member():
+#    return render_template('tables-data.html')
+    return render_template('member.html')
+
+@app.route('/get_orders', methods=['POST'])
+def get_orders():
+    data = request.get_json()
+    selected_option = data['selectedOption']
+    cursor = database.cursor()
+
+    orders = []
+
+    if selected_option == "option1":
+        query = f"""
+        SELECT OrderID
+        FROM Orders
+        WHERE DATE(OrderDate) = CURDATE() AND UserID = %s
+        """
+        cursor.execute(query, (session['username'],))
+        result = cursor.fetchall()
+
+        for row in result:
+            orders.append(row[0])
+    else:
+        query = f"""
+        SELECT OrderID
+        FROM Orders
+        WHERE UserID = %s
+        """
+        cursor.execute(query, (session['username'],))
+        result = cursor.fetchall()
+
+        for row in result:
+            orders.append(row[0])
+    
+    return jsonify({'orders': orders})
+
+@app.route('/get_order_items',methods=['POST'])
+def get_order_items():
+    data = request.get_json()
+    cursor = database.cursor()
+
+    query = f"""
+        SELECT Title,Quantity,Price
+        FROM OrderItems
+        WHERE OrderID = %s
+        """
+    cursor.execute(query, (data['orderID'],))
+    result = cursor.fetchall()
+    
+    order_items=[]
+    for item in result:
+        order_items.append((item[0],item[1],item[2]))
+
+    return jsonify({'order_items':order_items})
 
 
 
