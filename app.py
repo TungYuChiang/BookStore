@@ -321,6 +321,16 @@ def delete_cart_item():
     
     return 'Cart item deleted successfully'
    
+# delete the whole cart item
+@app.route('/delete_cart_item', methods=['POST'])
+def delete_cart_item():
+    cursor = database.cursor()
+    item_name = request.form.get('item_name')
+    
+    cursor.execute('DELETE FROM CartItems WHERE UserID = %s AND Title = %s', (session['username'], item_name))
+    database.commit()
+    
+    return 'Cart item deleted successfully'
 
 
 @app.route('/update-quantity', methods=['POST'])
