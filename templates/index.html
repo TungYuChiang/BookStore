@@ -43,7 +43,7 @@
 <header id="header" class="fixed-top ">
   <div class="container d-flex align-items-center">
 
-    <h1 class="logo me-auto"><a href="/">BookStore</a></h1>
+    <h1 class="logo me-auto"><a href="{{ url_for('index') }}">BookStore</a></h1>
     <!-- Uncomment below if you prefer to use an image logo -->
     <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -52,14 +52,14 @@
         <li><a class="nav-link scrollto active" href="#hero">本月暢銷</a></li>
         <li class="dropdown"><a href="#"><span>書籍類別</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a href="#">工具書</a></li>
-            <li><a href="#">雜誌</a></li>
-            <li><a href="#">科幻小說</a></li>
-            <li><a href="#">愛情小說</a></li>
-            <li><a href="#">漫畫</a></li>
+            <li><a href="{{ url_for('search') }}?category=工具書">工具書</a></li>
+            <li><a href="{{ url_for('search') }}?category=雜誌">雜誌</a></li>
+            <li><a href="{{ url_for('search') }}?category=科幻小說">科幻小說</a></li>
+            <li><a href="{{ url_for('search') }}?category=愛情小說">愛情小說</a></li>
+            <li><a href="{{ url_for('search') }}?category=漫畫">漫畫</a></li>
           </ul>
         </li>
-        <li class="dropdown"><a href="#"><span>書本語言</span> <i class="bi bi-chevron-down"></i></a>
+        <li class="dropdown"><a href="#"><span>書籍語言</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
             <li><a href="#">中文</a></li>
             <li><a href="#">英文</a></li>
@@ -106,8 +106,8 @@
         <div class="row justify-content-center">
           <div class="col-lg-6">
             <h4>一起進入書本的海洋吧</h4>
-            <form action="" method="post">
-              <input type="email" name="email" placeholder="輸入書名、出版社、作者的關鍵字"><input type="submit" value="Search">
+            <form action="/search" method="post">
+              <input type="text" name="keyword" placeholder="輸入書名、出版社、作者的關鍵字"><input type="submit" value="Search">
             </form>
           </div>
         </div>
@@ -120,26 +120,20 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>各式書本</h2>
+          <h2>各類暢銷書</h2>
         </div>
 
         <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
-          <li data-filter="*" class="filter-active">All</li>
-          <li data-filter=".filter-app">App</li>
-          <li data-filter=".filter-card">Card</li>
-          <li data-filter=".filter-web">Web</li>
+          <li data-filter=".filter-card">工具書</li>
+          <li data-filter=".filter-card">愛情小說</li>
+          <li data-filter=".filter-card">雜誌</li>
+          <li data-filter=".filter-card">科幻小說</li>
+          <li data-filter=".filter-card">漫畫</li>
         </ul>
 
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-
-          
-
-          
-
-          
-
           <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-img"><img src="{{ url_for('static', filename='assets/img/portfolio/portfolio-7.jpg') }}" class="img-fluid" alt=""></div>
+            <div class="portfolio-img"><img src="{{url_for('static', filename='assets/img/portfolio/portfolio-7.jpg') }}" class="img-fluid" alt=""></div>
             <div class="portfolio-info">
               <h4>Card 1</h4>
               <p>Card</p>
