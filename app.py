@@ -398,7 +398,7 @@ def order_process():
 
     return jsonify({'status': 'success', 'message': '訂單已收到'})
   
- @app.route('/member',methods=['GET'])
+@app.route('/member',methods=['GET'])
 def member():
 #    return render_template('tables-data.html')
     return render_template('member.html')
