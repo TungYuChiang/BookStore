@@ -30,7 +30,8 @@ $(document).ready(function() {
       type: 'POST',
       data: { quantity: value, item_name: title },
       success: function(response) {
-          button.prev('.book-quantity').val(response.quantity);
+        button.next('.book-quantity').val(response.quantity);
+        $('.total_price').text(response.total_price);
       },
       error: function(xhr, status, error) {
           // Handle any errors that occurred during the AJAX request
@@ -53,7 +54,8 @@ $(document).ready(function() {
       type: 'POST',
       data: { quantity: value, item_name: title },
       success: function(response) {
-          button.prev('.book-quantity').val(response.quantity);
+        button.prev('.book-quantity').val(response.quantity);
+        $('.total_price').text(response.total_price);
       },
       error: function(xhr, status, error) {
         // Handle any errors that occurred during the AJAX request
