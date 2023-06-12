@@ -323,7 +323,7 @@ def delete_cart_item():
     return 'Cart item deleted successfully'
 
 
-@app.route('/update-quantity', methods=['POST'])
+@app.route('/update_quantity', methods=['POST'])
 def update_quantity():
     # 取得ajax請求中的資料
     item_name = request.form.get('item_name')
@@ -363,7 +363,7 @@ def update_quantity():
     total_price = sum(item['price'] * item['quantity'] for item in cart_items)
     total_quantity = sum(item['quantity'] for item in cart_items)
 
-    return jsonify({'success': True, 'total_price': total_price, 'total_quantity': total_quantity, 'cart_items': cart_items})
+    return jsonify({'success': True, 'total_price': total_price, 'total_quantity': total_quantity, 'cart_items': cart_items, 'quantity': quantity})
 
 @app.route('/order_process', methods=['POST'])
 def order_process():

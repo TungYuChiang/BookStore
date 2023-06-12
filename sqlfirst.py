@@ -6,7 +6,7 @@ import mysql.connector
 database = mysql.connector.connect(
   host = "127.0.0.1",
   user = "root",
-  password = "IM880319"
+  password = "e"
 )
 
 # Create a new cursor
@@ -93,9 +93,9 @@ tables = [
     """
 ]
 i=0
-#for table in tables:
-    #cursor.execute(table)
-#database.commit()
+for table in tables:
+    cursor.execute(table)
+database.commit()
 
 cursor.execute('INSERT INTO Author (Name) VALUES (%s)', ("J.K. Rowling",))
 database.commit()

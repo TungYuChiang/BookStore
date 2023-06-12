@@ -76,9 +76,6 @@
   </div>
 </header><!-- End Header -->
 
-
-
-
     <!-- MAIN CONTENT -->
     <main>
       <section class="cart-section">
@@ -94,16 +91,16 @@
                 <div class="img-box margin-right-sm">
                   <img
                     class="cart-img"
-                    src="/static/assets/img/cta-bg.jpg"
+                    src="/static/assets/img/book/{{ item.name }}.jpg"
                     alt="Cay cam ngot cua toi"
                   />
                 </div>
                 <p class="cart-book-title margin-right-super">
-                  {{item.name}}
+                  {{ item.name }}
                 </p>
 
                 <div class="price-tag margin-right-super">
-                  <p class="price-tag__sale">{{item.price}}</p>
+                  <p class="price-tag__sale">{{ item.price }}</p>
                 </div>
                 <div class="quantity-box__cart quantity-box margin-right-super">
                   <button class="btn-decrease" data-title="{{ item.name }}">-</button>
