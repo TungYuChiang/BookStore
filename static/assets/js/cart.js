@@ -9,6 +9,7 @@ $(document).ready(function() {
         type: 'POST',
         data: { item_name: title },
         success: function(response) {
+          window.reload();
           console.log(response);
         },
         error: function(xhr, status, error) {

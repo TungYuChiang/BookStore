@@ -369,11 +369,14 @@ def update_quantity():
 def order_process():
     recipient = request.form.get('recipient')
     address = request.form.get('address')
+    
+    print(recipient)
+    print(address)
     order_date = datetime.now()
 
     cursor = database.cursor()
 
-    query = "INSERT INTO Orders (UserID, OrderDate, Recipient, DeliveryAddress) VALUES (%s, %s, %s, %s)"
+    query = "INSERT INTO Orders (UserID, OrderDate, Recipient, Address) VALUES (%s, %s, %s, %s)"
     cursor.execute(query, (session['username'], order_date, recipient, address))
     database.commit()
 
@@ -396,7 +399,9 @@ def order_process():
 
     # 在這裡進行後續的訂單處理
 
-    return jsonify({'status': 'success', 'message': '訂單已收到'})
+    # return jsonify({'status': 'success', 'message': '訂單已收到'})
+    return render_template('index.html')
+
   
 @app.route('/member',methods=['GET'])
 def member():
@@ -487,4 +492,4 @@ def get_images():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=9874)
