@@ -106,9 +106,9 @@
                   <p class="price-tag__sale">{{item.price}}</p>
                 </div>
                 <div class="quantity-box__cart quantity-box margin-right-super">
-                  <button class="btn-decrease">-</button>
-                  <input type="number" min="0" value={{item.quantity}} />
-                  <button class="btn-increase">+</button>
+                  <button class="btn-decrease" data-title="{{ item.name }}">-</button>
+                  <input class="book-quantity" type="number" min="0" value={{item.quantity}} />
+                  <button class="btn-increase" data-title="{{ item.name }}">+</button>
                 </div>
                 <button type="submit" class="btn-detele-item"  data-title="{{ item.name }}">
                   <ion-icon class="delete-icon" name="trash-outline"></ion-icon>
@@ -124,7 +124,7 @@
                 <a href="#" class="change-address__link">更改</a>
               </div>
               <div class="info">
-                <p class="info-name padding-r-md">台北</p>
+                <p class="info-name padding-r-md">台中</p>
                 <p class="info-phone padding-l-md">0383314133</p>
               </div>
               <address class="info-address">
@@ -136,7 +136,7 @@
               <h2 class="price-title">支付</h2>
               <div class="total">
                 <span>總金額</span>
-                <span>{{total_price}}</span>
+                <span>{{ total_price }}</span>
               </div>
             </div>
             <button class="btn btn--radius btn-order">確認</button>
