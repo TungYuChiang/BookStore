@@ -28,52 +28,9 @@
   <!-- Template Main CSS File -->
   <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Arsha
-  * Updated: May 30 2023 with Bootstrap v5.3.0
-  * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
-
-  <!-- ======= Header ======= -->
-  <!-- <header id="header" class="fixed-top "> -->
-    <!-- <div class="container d-flex align-items-center"> -->
-
-      <!-- <h1 class="logo me-auto"><a href="index.html">BookStore</a></h1> -->
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-
-      <!-- <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="nav-link scrollto active" href="#hero">本月暢銷</a></li>
-          <li class="dropdown"><a href="#"><span>書籍類別</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="#">工具書</a></li>
-              <li><a href="#">雜誌</a></li>
-              <li><a href="#">科幻小說</a></li>
-              <li><a href="#">愛情小說</a></li>
-              <li><a href="#">漫畫</a></li>
-            </ul>
-          </li>
-          <li class="dropdown"><a href="#"><span>書本語言</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="#">中文</a></li>
-              <li><a href="#">英文</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="cart.html"><ion-icon class="cart-icon" name="cart-sharp" size="large"></ion-icon></a></li>
-          <li><a class="getstarted scrollto" href="/login">Login</a></li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav>.navbar -->
-
-    <!-- </div> -->
-  <!-- </header>End Header -->
   
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top ">
@@ -88,23 +45,17 @@
         <li><a class="nav-link scrollto active" href="#hero">本月暢銷</a></li>
         <li class="dropdown"><a href="#"><span>書籍類別</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a href="#">工具書</a></li>
-            <li><a href="#">雜誌</a></li>
-            <li><a href="#">科幻小說</a></li>
-            <li><a href="#">愛情小說</a></li>
-            <li><a href="#">漫畫</a></li>
-          </ul>
-        </li>
-        <li class="dropdown"><a href="#"><span>書籍語言</span> <i class="bi bi-chevron-down"></i></a>
-          <ul>
-            <li><a href="#">中文</a></li>
-            <li><a href="#">英文</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=textbook">工具書</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=magzine">雜誌</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=fiction">科幻小說</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=romance">愛情小說</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=comic">漫畫</a></li>
           </ul>
         </li>
         {% if 'logged_in' in session and session['logged_in'] %}
-        <li><a href="cart.html"><ion-icon class="cart-icon" name="cart-sharp" size="large"></ion-icon></a></li>
-        <li><a class="nav-link scrollto" >會員中心</a></li> <!---還沒寫好  href="{{ url_for('member') }}"---->
+        <li><a class="nav-link scrollto" href="#">會員中心</a></li>
         <li><a class="nav-link scrollto" href="{{ url_for('logout') }}">登出</a></li>
+        <li><a href="{{ url_for('show_cart') }}"><ion-icon class="cart-icon" name="cart-sharp" size="large"></ion-icon></a></li>
         {% else %}
         <li><a class="getstarted scrollto" href="{{ url_for('login') }}">Login</a></li>
         <li><a class="getstarted scrollto" href="{{ url_for('register') }}">註冊</a></li>
@@ -115,37 +66,12 @@
 
   </div>
 </header><!-- End Header -->
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex align-items-center">
-
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
-          <h1>電腦工具書大特賣!</h1>
-          <h2>走在時代的尖端不被淘汰</h2>
-          <div class="d-flex justify-content-center justify-content-lg-start">
-            <a href="#about" class="btn-get-started scrollto">Get Started</a>
-          </div>
-        </div>
-        <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
-          <img src="{{ url_for('static', filename='assets/img/hero-img.png') }}" class="img-fluid animated" alt="">
-        </div>
-      </div>
-    </div>
-
-  </section><!-- End Hero -->
-
   <main id="main">
     <footer id="footer">
     <div class="footer-newsletter">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-6">
-            <h4>一起進入書本的海洋吧</h4>
-            <form action="" method="post">
-              <input type="email" name="email" placeholder="輸入書名、出版社、作者的關鍵字"><input type="submit" value="Search">
-            </form>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -156,38 +82,20 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>各類暢銷書</h2>
+          <h2>{{ keyword }}</h2>
         </div>
-
-        <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
-          <li data-filter=".filter-app">工具書</li>
-          <li data-filter=".filter-app">愛情小說</li>
-          <li data-filter=".filter-card">雜誌</li>
-          <li data-filter=".filter-web">科幻小說</li>
-          <li data-filter=".filter-app">漫畫</li>
-        </ul>
-
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
 
+          {%for book in books%}
           <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-img"><img src="{{ url_for('static', filename='assets/img/工具書/1.jpg') }}" class="img-fluid" alt=""></div>
+            <div class="portfolio-img"><img src="{{ url_for('static', filename='assets/img/book/' + book.BookName+'.jpg') }}" class="img-fluid" alt=""></div>
             <div class="portfolio-info">
-              <h4>CS一個月上手</h4>
-              <p>中文</p>
-              <a href="{{ url_for('static', filename='assets/img/portfolio/portfolio-7.jpg') }}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-img"><img src="{{ url_for('static', filename='assets/img/portfolio/portfolio-7.jpg') }}" class="img-fluid" alt=""></div>
-            <div class="portfolio-info">
-              <h4>Card 3</h4>
-              <p>Card</p>
+              <h4>{{ book.BookName }}</h4>
               <a href="{{ url_for('static', filename='assets/img/portfolio/portfolio-8.jpg') }}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 3"><i class="bx bx-plus"></i></a>
               <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
             </div>
           </div>
+          {%endfor%}
 
         </div>
 
