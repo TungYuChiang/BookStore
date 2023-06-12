@@ -35,9 +35,9 @@ sql_commands = [
     """
     INSERT INTO Book (BookName, Author_ID, Publisher_ID, Description, Language, Category, Price, Inventory)
     VALUES 
-    ('Harry Potter', 1, 1, 'Description of the book', 'English', 'Fantasy', 19.99, 10),
-    ('Game of Thrones', 2, 2, 'Description of the book', 'English', 'Fantasy', 24.99, 8),
-    ('The Lord of the Rings', 3, 3, 'Description of the book', 'English', 'Fantasy', 29.99, 5);
+    ('Harry Potter', 1, 1, 'Description of the book', 'english', 'fantastic', 19.99, 10),
+    ('Game of Thrones', 2, 2, 'Description of the book', 'english', 'fantastic', 24.99, 8),
+    ('The Lord of the Rings', 3, 3, 'Description of the book', 'english', 'fantastic', 29.99, 5);
     """,
     
     """
