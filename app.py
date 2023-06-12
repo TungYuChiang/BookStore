@@ -197,9 +197,9 @@ def before_request():
 
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
-    book_name = request.form.get('book_name')
-    quantity = int(request.form.get('quantity'))
-    
+    data = request.get_json(force = True)
+    book_name = data.get('book_name')
+    quantity = data.get('quantity')
     cursor = database.cursor()
 
     sql = """

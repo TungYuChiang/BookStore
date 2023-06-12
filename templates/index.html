@@ -121,7 +121,7 @@
         <div class="section-title">
           <h2>各類暢銷書</h2>
         </div>
-
+        
         <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
           <li data-filter=".all" class="filter-active">所有書籍</li>
           <li data-filter=".textbook">工具書</li>
@@ -130,28 +130,7 @@
           <li data-filter=".romance">愛情小說</li>
           <li data-filter=".comic">漫畫</li>
         </ul>
-
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-img"><img src="{{url_for('static', filename='assets/img/portfolio/portfolio-7.jpg') }}" class="img-fluid" alt=""></div>
-            <div class="portfolio-info">
-              <h4>Card 1</h4>
-              <p>Card</p>
-              <a href="{{ url_for('static', filename='assets/img/portfolio/portfolio-7.jpg') }}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 1"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-img"><img src="{{ url_for('static', filename='assets/img/portfolio/portfolio-7.jpg') }}" class="img-fluid" alt=""></div>
-            <div class="portfolio-info">
-              <h4>Card 3</h4>
-              <p>Card</p>
-              <a href="{{ url_for('static', filename='assets/img/portfolio/portfolio-8.jpg') }}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 3"><i class="bx bx-plus"></i></a>
-              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-
         </div>
 
       </div>
@@ -220,7 +199,7 @@
         <div class="row">
 
           <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>Arsha</h3>
+            <h3>BookStore</h3>
             <p>
               A108 Adam Street <br>
               New York, NY 535022<br>
@@ -270,7 +249,7 @@
 
     <div class="container footer-bottom clearfix">
       <div class="copyright">
-        &copy; Copyright <strong><span>Arsha</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>BookStore</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
@@ -313,7 +292,7 @@ $(document).ready(function() {
         data.forEach(function(bookname) {
           console.log(bookname)
           var imgPath = 'static/assets/img/book/' + bookname + '.jpg';
-          var item = '<div class="col-lg-2 col-md-6 portfolio-item filter-card"><div class="portfolio-img"><img src="' + imgPath + '" class="img-fluid" alt=""></div></div>';
+          var item = '<div class="col-lg-2 col-md-6 portfolio-item filter-card"><div class="portfolio-img"><img src="' + imgPath + '" class="img-fluid" alt=""><a href="#" onclick="add_to_cart(\'' + bookname + '\')" ><ion-icon  class="cart-icon" name="heart-outline" size="large"></ion-icon></a></div></div>';
           $(".portfolio-container").append(item);  // 加入新的內容
           let portfolioContainer = document.querySelector('.portfolio-container');
           let newImageHeight = document.querySelector('.portfolio-img img').offsetHeight;
@@ -323,7 +302,41 @@ $(document).ready(function() {
     });
   });
   $("#portfolio-flters li.filter-active").click();
+  
 });
+function add_to_cart(book_name) {
+  event.preventDefault();
+  console.log("booknameeeeeeeeeeee  = " + book_name);
+  // Create an XMLHttpRequest object
+  var xhr = new XMLHttpRequest();
+
+  // Configure the request
+  xhr.open('POST', '/add_to_cart', true);
+
+  // Set the request headers if needed
+  // xhr.setRequestHeader('Content-Type', 'application/json');
+
+  // Set up the callback function for the request
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      // Request was successful
+      var response = xhr.responseText;
+      console.log(response);
+      // Handle the response as needed
+    } else {
+      // Request failed
+      console.error('Request failed. Status: ' + xhr.status);
+      // Handle the error case
+    }
+  };
+
+  // Set up the request payload if needed
+  var data = { book_name: book_name , quantity: "1"};
+
+  // Send the request
+  xhr.send(JSON.stringify(data));
+  console.log("Button clicked!");
+}
 </script>
 
 
