@@ -85,8 +85,6 @@ def index():
 def bookByCategory():
     category = request.args.get('category', '')#哪個類型的書
     #從上方的導覽列or下方選擇是哪種類型的書
-    #SELECT * FROM Book WHERE Cateogory LIKE %s
-    query = request.args.get('query', '')
     cursor = database.cursor()
     cursor.execute("SELECT * FROM Book WHERE Category LIKE %s", ('%' + category + '%',))
     
@@ -131,62 +129,66 @@ def bookByCategory():
             cart_count = 0
     else:
         cart_count = 0
-    address = category + '.html'
-    print(address)
-    return render_template(address, books = books_list, cart_count = cart_count)
+    
+    return render_template('category.html',category = category , books = books_list, cart_count = cart_count)
 
 
-@app.route('/search')
+@app.route('/search', methods=['POST', 'GET'])
 def search():
-    category = request.args.get('category', '')#哪個類型的書
-    #從上方的導覽列or下方選擇是哪種類型的書
-    #SELECT * FROM Book WHERE Cateogory LIKE %s
-    query = request.args.get('query', '')
-    cursor = database.cursor()
-    cursor.execute("SELECT * FROM Book WHERE Category LIKE %s", ('%' + category + '%',))
-    
-    books = cursor.fetchall()
-    # 準備空的書本列表
-    books_list = []
-    # 處理每一本書
-    for book in books:
-        # 取得 Author_ID 和 Publisher_ID
-        author_id = book[1]
-        publisher_id = book[2]
-
-        # 查找作者名
-        cursor.execute("SELECT Name FROM Author WHERE ID = %s", (author_id,))
-        author_name = cursor.fetchone()[0]
-
-        # 查找出版商名
-        cursor.execute("SELECT Name FROM Publisher WHERE ID = %s", (publisher_id,))
-        publisher_name = cursor.fetchone()[0]
-
-        # 組裝書本信息
-        book_dict = {
-            "BookName": book[0],
-            "AuthorName": author_name,
-            "PublisherName": publisher_name,
-            "Description": book[3],
-            "Language": book[4],
-            "Category": book[5],
-            "Price": book[6],
-            "Inventory": book[7]
-        }
-        # 添加到書本列表
-        books_list.append(book_dict)
-        print(books_list[0])
-
-    if 'logged_in' in session and session['logged_in']:
+    #search
+    if request.method == 'POST':
+        keyword = request.form.get('keyword')
+        
         cursor = database.cursor()
-        cursor.execute('SELECT SUM(Quantity) FROM CartItems WHERE UserID = %s', (session['username'],))
-        try:
-            cart_count = int(cursor.fetchone()[0])
-        except:
+        #"SELECT b.BookName, b.Category, p.PublisherName, a.AuthorName FROM Book AS b JOIN Publisher AS p ON b.PublisherID = p.PublisherID JOIN Author AS a ON b.AuthorID = a.AuthorID WHERE b.BookName LIKE %s OR b.Category LIKE %s OR p.PublisherName LIKE %s OR a.AuthorName LIKE %s"
+
+        cursor.execute("SELECT * FROM Book WHERE BookName LIKE %s", ('%' + keyword + '%',))
+        
+        books = cursor.fetchall()
+        # 準備空的書本列表
+        books_list = []
+        # 處理每一本書
+        for book in books:
+            # 取得 Author_ID 和 Publisher_ID
+            author_id = book[1]
+            publisher_id = book[2]
+
+            # 查找作者名
+            cursor.execute("SELECT Name FROM Author WHERE ID = %s", (author_id,))
+            author_name = cursor.fetchone()[0]
+
+            # 查找出版商名
+            cursor.execute("SELECT Name FROM Publisher WHERE ID = %s", (publisher_id,))
+            publisher_name = cursor.fetchone()[0]
+
+            # 組裝書本信息
+            book_dict = {
+                "BookName": book[0],
+                "AuthorName": author_name,
+                "PublisherName": publisher_name,
+                "Description": book[3],
+                "Language": book[4],
+                "Category": book[5],
+                "Price": book[6],
+                "Inventory": book[7]
+            }
+            # 添加到書本列表
+            books_list.append(book_dict)
+            print(books_list[0])
+
+        if 'logged_in' in session and session['logged_in']:
+            cursor = database.cursor()
+            cursor.execute('SELECT SUM(Quantity) FROM CartItems WHERE UserID = %s', (session['username'],))
+            try:
+                cart_count = int(cursor.fetchone()[0])
+            except:
+                cart_count = 0
+        else:
             cart_count = 0
-    else:
-        cart_count = 0
-    return render_template('search.html', query=query, books=books_list,cart_count=cart_count)
+        #address = category + '.html'
+        #print(address)
+        return render_template('search.html', keyword=keyword, books=books_list,cart_count=cart_count)
+    return render_template('search.html', keyword=keyword, books=books_list,cart_count=cart_count)
 
 @app.before_request
 def before_request():

@@ -52,17 +52,11 @@
         <li><a class="nav-link scrollto active" href="#hero">本月暢銷</a></li>
         <li class="dropdown"><a href="#"><span>書籍類別</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a href="{{ url_for('bookByCategory') }}?category=工具書">工具書</a></li>
-            <li><a href="{{ url_for('bookByCategory') }}?category=雜誌">雜誌</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=textbook">工具書</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=magzine">雜誌</a></li>
             <li><a href="{{ url_for('bookByCategory') }}?category=fiction">科幻小說</a></li>
-            <li><a href="{{ url_for('bookByCategory') }}?category=愛情小說">愛情小說</a></li>
-            <li><a href="{{ url_for('bookByCategory') }}?category=漫畫">漫畫</a></li>
-          </ul>
-        </li>
-        <li class="dropdown"><a href="#"><span>書籍語言</span> <i class="bi bi-chevron-down"></i></a>
-          <ul>
-            <li><a href="#">中文</a></li>
-            <li><a href="#">英文</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=romance">愛情小說</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=comic">漫畫</a></li>
           </ul>
         </li>
         {% if 'logged_in' in session and session['logged_in'] %}
@@ -112,7 +106,9 @@
           <div class="col-lg-6">
             <h4>一起進入書本的海洋吧</h4>
             <form action="/search" method="post">
-              <input type="text" name="keyword" placeholder="輸入書名、出版社、作者的關鍵字"><input type="submit" value="Search">            </form>
+              <input type="text" href="{{ url_for('search') }}" name="keyword" placeholder="輸入書名的關鍵字">
+              <input type="submit" value="Search">
+            </form>
           </div>
         </div>
       </div>
