@@ -3,15 +3,15 @@ import mysql.connector
 # Create a new MySQL connection
 database = mysql.connector.connect(
   host = "127.0.0.1",
-  user = "yueh",
-  password = "oslab"
+  user = "root",
+  password = "IM880319"
 )
 
 # Create a new cursor
 cursor = database.cursor()
 
 # Create a new database
-cursor.execute("CREATE DATABASE IF NOT EXISTS BookStore_DB")
+cursor.execute("CREATE DATABASE IF NOT EXISTS BookStore_DB CHARACTER SET utf8 COLLATE utf8_general_ci;")
 
 # Use the new database
 cursor.execute("USE BookStore_DB")
@@ -89,10 +89,10 @@ tables = [
     VALUES ('admin', '1980-01-01', 'admin', 'admin', 'oslab20230606@hotmail.com');
     """
 ]
-i=0
-for table in tables:
-    cursor.execute(table)
-database.commit()
+#i=0
+#for table in tables:
+    #scursor.execute(table)
+#database.commit()
 
 cursor.execute('INSERT INTO Author (Name) VALUES (%s)', ("J.K. Rowling",))
 database.commit()

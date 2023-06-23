@@ -9,8 +9,7 @@ $(document).ready(function() {
         type: 'POST',
         data: { item_name: title },
         success: function(response) {
-          window.reload();
-          console.log(response);
+          location.reload();
         },
         error: function(xhr, status, error) {
           // Handle any errors that occur during the request
@@ -23,6 +22,7 @@ $(document).ready(function() {
   $('.btn-decrease').click(function() {
       event.preventDefault();
       var button = $(this);
+      console.log(button);
       var value = $(this).next('.book-quantity').val();
       var title = $(this).data('title');
       value = parseInt(value) - 1;
@@ -31,8 +31,13 @@ $(document).ready(function() {
       type: 'POST',
       data: { quantity: value, item_name: title },
       success: function(response) {
+        console.log(response);
         button.next('.book-quantity').val(response.quantity);
         $('.total_price').text(response.total_price);
+        $('#item-count').text(response.total_quantity);
+        if (response.quantity == 0) {
+          button.closest('form').remove();
+        }
       },
       error: function(xhr, status, error) {
           // Handle any errors that occurred during the AJAX request
@@ -57,6 +62,7 @@ $(document).ready(function() {
       success: function(response) {
         button.prev('.book-quantity').val(response.quantity);
         $('.total_price').text(response.total_price);
+        $('#item-count').text(response.total_quantity);
       },
       error: function(xhr, status, error) {
         // Handle any errors that occurred during the AJAX request

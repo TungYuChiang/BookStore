@@ -33,7 +33,7 @@
   <link href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
    <!-- Template Main CSS File -->
   <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet">
-
+  
 
 
   <!-- Template Main CSS File -->
@@ -51,45 +51,44 @@
 <body>
 
     <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top ">
-      <div class="container d-flex align-items-center">
-    
-        <h1 class="logo me-auto"><a href="/">BookStore</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-    
-        <nav id="navbar" class="navbar">
+<header id="header" class="fixed-top ">
+  <div class="container d-flex align-items-center">
+
+    <h1 class="logo me-auto"><a href="{{ url_for('index') }}">BookStore</a></h1>
+    <!-- Uncomment below if you prefer to use an image logo -->
+    <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a class="nav-link scrollto active" href="#hero">本月暢銷</a></li>
+        <li class="dropdown"><a href="#"><span>書籍類別</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a class="nav-link scrollto active" href="#hero">本月暢銷</a></li>
-            <li class="dropdown"><a href="#"><span>書籍類別</span> <i class="bi bi-chevron-down"></i></a>
-              <ul>
-                <li><a href="#">工具書</a></li>
-                <li><a href="#">雜誌</a></li>
-                <li><a href="#">科幻小說</a></li>
-                <li><a href="#">愛情小說</a></li>
-                <li><a href="#">漫畫</a></li>
-              </ul>
-            </li>
-            <li class="dropdown"><a href="#"><span>書本語言</span> <i class="bi bi-chevron-down"></i></a>
-              <ul>
-                <li><a href="#">中文</a></li>
-                <li><a href="#">英文</a></li>
-              </ul>
-            </li>
-            {% if 'logged_in' in session and session['logged_in'] %}
-            <li><a class="nav-link scrollto" href="#">會員中心</a></li>
-            <li><a class="nav-link scrollto" href="{{ url_for('logout') }}">登出</a></li>
-            <li><a href="{{ url_for('show_cart') }}"><ion-icon class="cart-icon" name="cart-sharp" size="large"></ion-icon></a></li>
-            {% else %}
-            <li><a class="getstarted scrollto" href="{{ url_for('login') }}">Login</a></li>
-            <li><a class="getstarted scrollto" href="{{ url_for('register') }}">註冊</a></li>
-            {% endif %}
+            <li><a href="{{ url_for('bookByCategory') }}?category=textbook">工具書</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=magazine">雜誌</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=fiction">科幻小說</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=romance">愛情小說</a></li>
+            <li><a href="{{ url_for('bookByCategory') }}?category=comic">漫畫</a></li>
           </ul>
-          <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav><!-- .navbar -->
-    
-      </div>
-    </header><!-- End Header -->
+        </li>
+        {% if 'logged_in' in session and session['logged_in'] %}
+        <li><a class="nav-link scrollto" href="{{ url_for('member') }}">會員中心</a></li>
+        <li><a class="nav-link scrollto" href="{{ url_for('logout') }}">登出</a></li>
+        <li>
+          <a href="{{ url_for('show_cart') }}">
+            <ion-icon class="cart-icon" name="cart-sharp" size="large"></ion-icon>
+            <span id="item-count">{{ cart_count }}</span>
+          </a>
+        </li>
+        {% else %}
+        <li><a class="getstarted scrollto" href="{{ url_for('login') }}">Login</a></li>
+        <li><a class="getstarted scrollto" href="{{ url_for('register') }}">註冊</a></li>
+        {% endif %}
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+
+  </div>
+</header><!-- End Header -->
 
   <main id="main">
 
@@ -150,26 +149,12 @@
   <!-- ======= Footer ======= -->
   <footer id="footer">
 
-    <div class="footer-newsletter">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-6">
-            <h4>Join Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="footer-top">
       <div class="container">
         <div class="row">
 
           <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>Arsha</h3>
+            <h3>BookStore</h3>
             <p>
               A108 Adam Street <br>
               New York, NY 535022<br>
@@ -219,7 +204,7 @@
 
     <div class="container footer-bottom clearfix">
       <div class="copyright">
-        &copy; Copyright <strong><span>Arsha</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>BookStore</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
@@ -245,11 +230,13 @@
   <script src="{{ url_for('static', filename='NiceAdmin/assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
   <script src="{{ url_for('static', filename='NiceAdmin/assets/vendor/tinymce/tinymce.min.js') }}"></script>
   <script src="{{ url_for('static', filename='NiceAdmin/assets/vendor/php-email-form/validate.js') }}"></script>
-
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   <!-- Template Main JS File -->
   <script src="{{ url_for('static', filename='NiceAdmin/assets/js/main.js') }}"></script>
 
-  <script>
+  
+<script>
 
 function fetchOrders() {
   var selectedOption = document.getElementById("mySelect").value;
@@ -287,7 +274,6 @@ function fetchOrders() {
   }
 }
 
-  // Function to fetch order items for a specific order
 // Function to fetch order items for a specific order
 function fetchOrderItems(orderID) {
   fetch('/get_order_items', {
@@ -332,7 +318,7 @@ function fetchOrderItems(orderID) {
     });
 }
 
-    </script>
+</script>
 
 
 </body>

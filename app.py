@@ -11,7 +11,7 @@ app.secret_key = '123456789'
 database = mysql.connector.connect(
   host = "127.0.0.1",
   user = "root",
-  password = "e",
+  password = "IM880319",
   database = "BookStore_DB" # 替換成你的資料庫名稱
 )
 
@@ -407,8 +407,23 @@ def order_process():
   
 @app.route('/member',methods=['GET'])
 def member():
-#    return render_template('tables-data.html')
-    return render_template('member.html')
+    cursor = database.cursor()
+    cursor.execute('SELECT * FROM CartItems WHERE UserID = %s', (session['username'],))
+    total_items = cursor.fetchall()
+    cart_items = []
+    for item in total_items:
+        cursor.execute('SELECT Price FROM Book WHERE BookName = %s', (item[1],))
+        price = int(cursor.fetchone()[0])
+
+        cart_dict = {
+            "name": item[1],
+            "quantity": item[2],
+            "price": price,
+        }
+
+        cart_items.append(cart_dict)
+    total_quantity = sum(item['quantity'] for item in cart_items)
+    return render_template('member.html', cart_count=total_quantity)
 
 @app.route('/get_orders', methods=['POST'])
 def get_orders():
