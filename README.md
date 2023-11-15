@@ -1,4 +1,5 @@
 # BookStore
+Web project - BookStore
 # features
 1. Login (done)
 2. Logout (done)
